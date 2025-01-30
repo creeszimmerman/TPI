@@ -1,5 +1,5 @@
 # TPI
-Python code for test particle insertion
+Python code for test particle insertion.
 see Rees-Zimmerman et al., 2025. 'Inverting g(r) to u(r): The test-particle insertion method'
 
 
