@@ -179,7 +179,7 @@ arraypositions = readpositions.to_numpy()
 #calculating midpoints and saving as an hdf file
 midpoints = generate_midpoints()
 midpoints_dataframe = pd.DataFrame(midpoints)
-midpoints_dataframe.to_hdf(midpoints_file, key='midpoints_dataframe')
+midpoints_dataframe.to_hdf(midpoints_file, key='midpoints')
 
 
 #setting up arrays
