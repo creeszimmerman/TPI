@@ -6,7 +6,7 @@ Please see and cite Rees-Zimmerman et al., 2025. 'Inverting g(r) to u(r): The te
 SCRIPTS
 There are three python scripts to be run in order. The scripts as written are for 2D but are easy generalisable to 3D.
 
-1. either 'DH_gr_1st_script_periodic.py' or 'DH_gr_1st_script_nonperiodic.py', depending on whether your data has periodic or nonperiodic boundary conditions
+1. either 'DH_gr_1st_script_periodic.py' or 'DH_gr_1st_script_nonperiodic.py', depending on whether your data have periodic or nonperiodic boundary conditions
 2. 'matrices_2nd_script_periodic.py'. This has a few alternative lines commented out for use with nonperiodic boundary conditions
 3. 'inversion_3rd_script_periodic.py'. This script is the same regardless of whether periodic or nonperiodic boundary conditions are used
 
