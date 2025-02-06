@@ -81,9 +81,8 @@ def calculate_histogram(i):
     snapshotpositions = arraypositions[firstindex:finalindex]
     snapshotpositions = snapshotpositions.astype(dtype=np.float64)
 
-    #obtains the number of particles for a particular snapshot and calculates the bulk density for a particular snapshot
+    #obtains the number of particles for a particular snapshot
     N = len(snapshotpositions)
-    rho_bulk_snapshot = N/V
 
     #generates a KDTree of all particle coordinates for snapshot of interest.
     snapshotKD = KDTree(snapshotpositions)
@@ -101,7 +100,7 @@ def calculate_histogram(i):
         histogram = pair_distribution_function(cleaned_distances)
         
         #calculates a normalised g_r for a particular reference particle
-        g_r_particle = np.divide(histogram[0],2*constants.pi*midpoints*bin_width*rho_bulk_snapshot)
+        g_r_particle = np.divide(histogram[0],2*constants.pi*midpoints*bin_width*(N-1)/V)
 
         #adds the normalised g_r for particle to cumulative g(r) for snapshot
         sum_g_r_particles = np.add(sum_g_r_particles, g_r_particle)
@@ -133,9 +132,8 @@ def calculate_idealgas_histogram(i):
     snapshotpositions = idealgas_arraypositions[firstindex:finalindex]
     snapshotpositions = snapshotpositions.astype(dtype=np.float64)
 
-    #obtains the number of particles for a particular snapshot and calculates the bulk density for a particular snapshot
+    #obtains the number of particles for a particular snapshot
     N = len(snapshotpositions)
-    rho_bulk_snapshot = N/V #will be the same as the measured one for each corresponding snapshot
 
     #generates a KDTree of all particle coordinates for snapshot of interest.
     snapshotKD = KDTree(snapshotpositions)
@@ -153,7 +151,7 @@ def calculate_idealgas_histogram(i):
         histogram = pair_distribution_function(cleaned_distances)
         
         #calculates a normalised g_r for a particular reference particle
-        g_r_particle = np.divide(histogram[0],2*constants.pi*midpoints*bin_width*rho_bulk_snapshot)
+        g_r_particle = np.divide(histogram[0],2*constants.pi*midpoints*bin_width*(N-1)/V)
 
         #adds the normalised g_r for particle to cumulative g(r) for snapshot
         sum_g_r_particles = np.add(sum_g_r_particles, g_r_particle)
