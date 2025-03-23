@@ -76,7 +76,7 @@ def calculate_g_r_for_trial_v(index):
     return g_r_guess
 
 def update_trial_potential(avg_g_r_experiment, trial_potential, multiplier):
-    trial_potential = np.nan_to_num(trial_potential, posinf=max_energy, neginf = max_energy) #replace NaN values with max_energy
+    trial_potential = np.nan_to_num(trial_potential, posinf=max_energy, neginf = -max_energy) #replace NaN values with max_energy
     ratio_write = np.divide(target_RDF, avg_g_r_experiment)
     ratio_write = np.nan_to_num(ratio_write)
     ratio_write = np.where(ratio_write < small_number, small_number, ratio_write) #clean the ratio of target RDF to generated one
@@ -134,7 +134,7 @@ for experiment in range(0, optimisations+1): #number of optimisations done
     if experiment == 0: #0: initial guess 
         initial_guess = -kT*np.log(target_RDF) #formula for trial potential using known g(r)
         trial_potential = initial_guess
-        trial_potential = np.nan_to_num(trial_potential, posinf=max_energy, neginf = max_energy)
+        trial_potential = np.nan_to_num(trial_potential, posinf=max_energy, neginf = -max_energy)
         #plot graph + save it to potentials folder
         plt.plot(midpoints, trial_potential, label='Generated u(r)', color='cornflowerblue', markerfacecolor='none', marker='D', alpha=0.8)
         plt.locator_params(axis='x', nbins=5)
