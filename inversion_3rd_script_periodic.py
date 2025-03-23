@@ -45,7 +45,7 @@ if not os.path.exists(potentials_path):
 
 #2. DEFINITIONS
         
-def import_RDF():
+def import_g_r():
     read_midpoints = pd.read_hdf(midpoints_file)
     read_histogram = pd.read_hdf(gr_file)
     midpoints_array = read_midpoints.to_numpy()
@@ -77,9 +77,9 @@ def calculate_g_r_for_trial_v(index):
 
 def update_trial_potential(avg_g_r_experiment, trial_potential, multiplier):
     trial_potential = np.nan_to_num(trial_potential, posinf=max_energy, neginf = -max_energy) #replace NaN values with max_energy
-    ratio_write = np.divide(target_RDF, avg_g_r_experiment)
+    ratio_write = np.divide(target_g_r, avg_g_r_experiment)
     ratio_write = np.nan_to_num(ratio_write)
-    ratio_write = np.where(ratio_write < small_number, small_number, ratio_write) #clean the ratio of target RDF to generated one
+    ratio_write = np.where(ratio_write < small_number, small_number, ratio_write) #clean the ratio of target g(r) to generated one
     log_ratio_write = np.log(ratio_write)
     trial_potential = trial_potential - multiplier*kT*log_ratio_write #corrector on trial potential
     return trial_potential
@@ -88,9 +88,9 @@ def update_trial_potential(avg_g_r_experiment, trial_potential, multiplier):
 
 #3.1 Calculating g(r)
 
-target_RDF, midpoints = import_RDF() 
+target_g_r, midpoints = import_g_r() 
 #replace any values less than small_number with small_number (to aid numerical stability)
-target_RDF = np.where(target_RDF<small_number, small_number, target_RDF) #finding where it is less than small_number and replacing by this value
+target_g_r = np.where(target_g_r<small_number, small_number, target_g_r) #finding where it is less than small_number and replacing by this value
 
 #3.2 Reading positions and newsnapshotstarts
 
@@ -132,7 +132,7 @@ for experiment in range(0, optimisations+1): #number of optimisations done
     optimisation_t0 = time.time() #timing the optimisations
     total_experiment_g_r = [] #store the total g(r)
     if experiment == 0: #0: initial guess 
-        initial_guess = -kT*np.log(target_RDF) #formula for trial potential using known g(r)
+        initial_guess = -kT*np.log(target_g_r) #formula for trial potential using known g(r)
         trial_potential = initial_guess
         trial_potential = np.nan_to_num(trial_potential, posinf=max_energy, neginf = -max_energy)
         #plot graph + save it to potentials folder
@@ -182,7 +182,7 @@ for experiment in range(0, optimisations+1): #number of optimisations done
         read_rdf_hdf['{}'.format(experiment)] = g_r_dataframe
         read_rdf_hdf.to_hdf('{}/RDFs_Backup.hdf'.format(inversepath), key = 'g_r_dataframe', mode = 'a')
     #calculation of difference between target and generated potentials and RDFs
-    avg_difference = get_avg_difference(target_RDF, avg_g_r_experiment, experiment)
+    avg_difference = get_avg_difference(target_g_r, avg_g_r_experiment, experiment)
     avg_differences = np.append(avg_differences, avg_difference)
 
     #only print the difference for every 5th optimisation
@@ -198,15 +198,15 @@ for experiment in range(0, optimisations+1): #number of optimisations done
     
     #comparing graph differences 
 
-    chi = (avg_g_r_experiment[0] - target_RDF[0])**2
+    chi = (avg_g_r_experiment[0] - target_g_r[0])**2
     for i in range (1, len(avg_g_r_experiment)):
-        chi = chi + (avg_g_r_experiment[i] - target_RDF[i])**2
+        chi = chi + (avg_g_r_experiment[i] - target_g_r[i])**2
     chi_array = np.append(chi_array, chi)
     
     #for first ten optimisations and for every 10th optimisation after, output and save comparison graphs
     if experiment < 10 or experiment%10 == 0:
         plt.plot(midpoints, avg_g_r_experiment, label='Generated g(r)', color='cornflowerblue', markerfacecolor='none', marker='D', alpha=0.8)
-        plt.plot(midpoints, target_RDF, label = 'Target g(r)', color='black', alpha=1, linewidth=1.5)
+        plt.plot(midpoints, target_g_r, label = 'Target g(r)', color='black', alpha=1, linewidth=1.5)
         plt.xlabel('r')
         plt.ylabel('g(r)')
         plt.xlim(0,max(midpoints)+0.05)
