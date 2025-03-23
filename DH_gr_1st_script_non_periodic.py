@@ -194,7 +194,6 @@ for i in range(1, len(starts)+1):
     N_per_snapshot = np.append(N_per_snapshot, N)
 
 total_snapshots = len(starts)
-sum_g_r_snapshots = np.zeros((bins))
 for g_r in all_g_r:
     sum_g_r_snapshots = np.add(sum_g_r_snapshots, g_r)
 
