@@ -105,7 +105,7 @@ def calculate_histogram(i):
         #adds the normalised g_r for particle to cumulative g(r) for snapshot
         sum_g_r_particles = np.add(sum_g_r_particles, g_r_particle)
     
-    #calculates average g(r) across all particles in snapshot
+    #calculates average g(r) across all N particles in snapshot
     average_g_r_particle_in_snap = np.divide(sum_g_r_particles, N)
 
     #return average_g_r_particle_in_snap
@@ -156,7 +156,7 @@ def calculate_idealgas_histogram(i):
         #adds the normalised g_r for particle to cumulative g(r) for snapshot
         sum_g_r_particles = np.add(sum_g_r_particles, g_r_particle)
     
-    #calculates average g(r) across all particles in snapshot
+    #calculates average g(r) across all N particles in snapshot
     average_idealgas_g_r_particle_in_snap = np.divide(sum_g_r_particles, N)
 
     return average_idealgas_g_r_particle_in_snap, N
