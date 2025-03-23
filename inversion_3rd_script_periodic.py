@@ -65,7 +65,7 @@ def get_avg_difference(target, generated, experiment):
 def calculate_g_r_for_trial_v(index):
     comparison_matrix = all_comparison_matrices[index] #retrieve relevant comparison matrix
     insertion_energy = comparison_matrix @ column_v #matrix multiplication
-    exponential = np.exp(-insertion_energy/kT) #matrix exponential
+    exponential = np.exp(-insertion_energy/kT) #matrix element-wise exponential
     bulk_average = np.mean(exponential) #mean of exponential column vector
     matrix_product = np.transpose(comparison_matrix)@exponential #matrix multiplication
     array_comparison = comparison_matrix.toarray() #conversion of sparse matrix to numpy array
