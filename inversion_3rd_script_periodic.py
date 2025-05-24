@@ -123,7 +123,6 @@ times = np.array([])
 times = np.append(times, loadtime)
 
 avg_differences = np.array([])
-chi_array = np.array([])
 optimisation_array = np.array([])
 
 time1 = time.time()
@@ -196,13 +195,6 @@ for experiment in range(0, optimisations+1): #number of optimisations done
     read_potential_hdf['{}'.format(experiment)] = potential_dataframe
     read_potential_hdf.to_hdf('{}/Potentials_Backup.hdf'.format(inversepath), key='potential_dataframe', mode = 'a')
     
-    #comparing graph differences 
-
-    chi = (avg_g_r_experiment[0] - target_g_r[0])**2
-    for i in range (1, len(avg_g_r_experiment)):
-        chi = chi + (avg_g_r_experiment[i] - target_g_r[i])**2
-    chi_array = np.append(chi_array, chi)
-    
     #for first ten optimisations and for every 10th optimisation after, output and save comparison graphs
     if experiment < 10 or experiment%10 == 0:
         plt.plot(midpoints, avg_g_r_experiment, label='Generated g(r)', color='cornflowerblue', markerfacecolor='none', marker='D', alpha=0.8)
@@ -211,7 +203,7 @@ for experiment in range(0, optimisations+1): #number of optimisations done
         plt.ylabel('g(r)')
         plt.xlim(0,max(midpoints)+0.05)
         plt.legend()
-        plt.text(2.75, 2,f"\u03C7²= {chi}")
+        plt.text(2.75, 2,f"\u03C7²= {avg_difference}")
         plt.title('Optimisation {}'.format(experiment), y=1.2)
         plt.savefig('{}/DC_{}'.format(distributions_path, experiment), dpi=600) # savefig does not work if path length too long
         plt.show()
@@ -243,7 +235,6 @@ time2 = time.time()
 print("Insertion time for all experiments: ", time2-time1)
 print("Average time per optimisation: ", np.average(times))
 
-
 averages_dataframe = pd.DataFrame(np.transpose(avg_differences))
 averages_dataframe.to_hdf('{}/Averages.hdf'.format(inversepath), key='averages_dataframe')
 
@@ -252,7 +243,7 @@ generated_dataframe = pd.DataFrame({'r':midpoints, 'generated':trial_potential})
 generated_dataframe.to_hdf('{}/GeneratedPotential.hdf'.format(inversepath), key='generated_dataframe')
 
 #4. PLOTTING CONVERGENCE OF G(R) THROUGHOUT OPTIMISATIONS
-plt.loglog(optimisation_array, chi_array)
+plt.loglog(optimisation_array, avg_differences)
 plt.xlabel('Optimisation Number')
 plt.ylabel('\u03C7²')
 plt.title('\u03C7² vs Optimisation Number')
