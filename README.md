@@ -1,6 +1,7 @@
 # TPI
 Python code for test particle insertion.
-Please see and cite Rees-Zimmerman et al., 2025. 'Inverting g(r) to u(r): The test-particle insertion method'
+Please see and cite:
+Rees-Zimmerman, C. R., Heafield, A., Ellerbeck, D., Stones, A. E., Dullens, R. P. A., & Aarts, D. G. A. L. (2025). Inverting g(r) to u(r): The test-particle insertion method. JCIS Open, 20, 100156. https://doi.org/10.1016/j.jciso.2025.100156
 
 
 SCRIPTS
