@@ -71,6 +71,7 @@ def create_matrices(i):
             distances = np.array([])
         else:
             distances = np.asarray(snapshotKD.query(testparticle, distance_upper_bound=cutoff, k=int(noindices)))
+            distances = distances[0]
         no_histogram = np.histogram(distances, bins = bins, range=(0,cutoff), density=False)[0]
         comparison_matrix.append(list(no_histogram))
     #cast to int16 data type to reduce memory usage.
@@ -91,3 +92,4 @@ for index in range(1, len(newsnapshotstarts)):
 end = time.time()
 time = end - start
 print('Matrices script runtime: ',time)
+
