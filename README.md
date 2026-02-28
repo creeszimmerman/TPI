@@ -2,7 +2,7 @@
 Python code for test particle insertion.
 Please see and cite:
 Rees-Zimmerman, C. R., Heafield, A., Ellerbeck, D., Stones, A. E., Dullens, R. P. A., & Aarts, D. G. A. L. (2025). Inverting g(r) to u(r): The test-particle insertion method. JCIS Open, 20, 100156. https://doi.org/10.1016/j.jciso.2025.100156
-Contact: Clare Rees-Zimmerman, crrz20@bath.ac.uk
+Contact: Clare Rees-Zimmerman, crrz20@bath.ac.uk; Dirk Aarts, dirk.aarts@chem.ox.ac.uk
 
 SCRIPTS
 There are three python scripts to be run in order. The scripts as written are for 2D but are easy generalisable to 3D.
